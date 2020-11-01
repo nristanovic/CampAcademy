@@ -1,0 +1,51 @@
+<%- include("./partials/header.ejs")%>
+
+
+		<section  class="container  mb-5 mt-5">
+			<div class="row">
+				<div class="col-md-5 m-auto">
+					<article class="card  py-2 mb-4 px-4" style="height: auto; width: auto;">
+						<div class="card-body">
+							<% if(reviews.length > 0) { %>
+							<h1 class="mb-4">Manage Reviews</h1>
+							<% }else{ %>
+							<h4 class="mb-4">You don't have any Reviews</h4>
+							<% }; %>
+							<table class="table text-white table-striped">
+								<thead>
+									<tr>
+										<th scope="col">Bootcamp</th>
+										<th scope="col">Rating</th>
+										<th scope="col"></th>
+										<th scope="col"></th>
+									</tr>
+								</thead>
+								<tbody>
+									<% reviews.forEach( function(review){ %>
+									<tr>
+										<td><%=review.bootcamp.name%></td>
+										<td class="text-center"><%=review.rating%></td>
+										<td>
+											<a href="/api/v1/reviews/<%=review.id%>" class="btn btn-secondary"
+												><i class="fas fa-pencil-alt"></i
+											></a>
+											
+										</td>
+										<td>
+											<form action="/api/v1/reviews/<%=review.id%>?_method=DELETE" method="POST">
+												<button class="btn  btn-danger">
+													<i class="fas fa-times"></i>
+												</button>
+											</form>
+										</td>
+									</tr>
+									<% }); %>
+								</tbody>
+							</table>
+						</div>
+					</article>
+				</div>
+			</div>
+		</section>
+
+		<%- include("./partials/footer.ejs")%>

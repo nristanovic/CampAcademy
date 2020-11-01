@@ -1,0 +1,128 @@
+<%- include("./partials/header.ejs")%>
+
+<!-- Latest bootcamps -->
+<section class="browse my-5">
+	<div class="container">
+		<div class="row">
+			<div class="showcase-inner container">
+				<h1 class="display-4">Find a Code Bootcamp</h1>
+				<p class="lead">
+					Find, rate and read reviews on coding bootcamps
+				</p>
+				<form action="/api/v1/bootcamps/radius" class="sortForm" method="POST">
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<input type="text" class="form-control" name="dis[zipcode]"
+									placeholder="Enter Zipcode" />
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<input type="text" class="form-control" name="dis[distance]"
+									placeholder="Kilometars From" />
+							</div>
+						</div>
+					</div>
+					<input type="submit" value="Find Bootcamps" class="btn btn-primary btn-block" />
+				</form>
+			</div>
+			<% if(results.length < 1) { %>
+			<div class="row" style="margin-left: 10%; margin-right: 10%; margin-bottom: 5%;">
+				
+					<div class=" col-md-12 ml-5 mt-5 mb-5 mr-5">
+						<h1 class="text-center">There is not such a Bootcamp</h1>
+						<h3 class="text-center text-primary">Try again</h3>
+					</div>
+			</div>
+			<% }; %>
+
+			<!-- Main col -->
+			<section class="card-list">
+						
+				
+				<!-- Bootcamps -->
+				<% results.forEach(function(bootcamp){ %>
+				<article class="card" style="height:auto;">
+					<header class="card-header">
+						<h5 class="card-title">
+							<a href="/api/v1/bootcamps/<%=bootcamp.id %>/courses">
+								<% if(bootcamp.averageRating){ %>
+								<span class="float-left badge badge-warning">
+									<%= bootcamp.averageRating %>
+								</span>
+								<% } %>
+
+								<% if(bootcamp.averageCost){ %>
+								<span class="float-right badge badge-success">
+									<%= bootcamp.averageCost %>
+								</span>
+								<% } %>
+								<h6 style="text-align: center;"><%= bootcamp.name %></h6>
+
+							</a>
+						</h5>
+					</header>
+					<div class="card-body">
+
+						<span class="badge badge-dark mb-2"><%=bootcamp.location.city  + ', ' + bootcamp.location.country%></span>
+						<p class="card-text">
+							<%= bootcamp.careers %>
+						</p>
+						<% if(bootcamp.photo !== 'no-photo.jpg'){ %>
+						<div class=" col-lg-12">
+							<img src="/uploads/<%= bootcamp.photo %>" class="card-img-bottom"  />
+						</div>
+						<% } %>
+
+					</div>
+				</article>
+				<% }); %>
+
+			</section>
+
+
+			<% if(startIndex !== null) { %>
+			<!-- Pagination -->
+
+			<div class="col-lg-6 offset-lg-5 py-5  d-flex">
+
+				<nav aria-label="Page navigation example" class="nav-pagination">
+					<ul class="pagination">
+						<% if( startIndex) { %>
+						<li class="page-item">
+							<a class="page-link" href="bootcamps?page=<%=pagination.prev.page %>">
+								<span class="pagination__symbol pagination__prev-symbol" aria-hidden="true">←</span>
+							</a>
+
+						</li>
+						<% } %>
+
+						<%  for(var i =0; i <= total/limit; i++) { %>
+						<li class="page-item">
+							<a class="page-link " id="pageNumber" value="<%=i%>" href="bootcamps?page=<%=i%>">
+								<span class="pagination__symbol" aria-hidden="true"><%= i+1 %></span>
+							</a>
+						</li>
+						<% }; %>
+
+						<% if( endIndex < total) { %>
+						<li class="page-item">
+							<a class="page-link" href="bootcamps?page=<%=pagination.next.page %>">
+								<span class="pagination__symbol pagination__next-symbol" aria-hidden="true">→</span>
+							</a>
+						</li>
+						<% } %>
+					</ul>
+				</nav>
+
+			</div>
+
+			<% } %>
+
+
+		</div>
+	</div>
+</section>
+
+<%- include("./partials/footer.ejs")%>

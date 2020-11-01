@@ -1,0 +1,131 @@
+
+
+<%- include("./partials/header.ejs")%>
+
+<section>
+	<div class="container">
+		<div class="row">
+			<!-- Main col -->
+
+			<div class="container">
+				<h1 class="text-center"><%= bootcamp.name %></h1>
+				<!-- Description -->
+				<p><%= bootcamp.description %></p>
+				<!-- Avg cost -->
+				<% if(bootcamp.averageCost){ %>
+				<p class="lead float-left mb-4">Average Course Cost: <span
+						class="text-primary"><%= bootcamp.averageCost %></span>
+				</p>
+				<% } %>
+				<% if(currentUser !== null && courses.length > 0 && currentUser.id == bootcamp.user) { %>
+
+				<form class="float-right" action="/api/v1/courses/add/<%=bootcamp.id%>/course">
+					<button class="btn btn-success btn-block-6">Add course</button>
+				</form>
+
+				<% }; %>
+			</div>
+
+
+			<% if(courses.length > 0){ %>
+			<section class="card-list">
+				<!-- Courses -->
+				<% courses.forEach(function(course){ %>
+				<article class="card " style="height: auto;">
+					<h5 class="card-header bg-primary text-white"><%= course.title %></h5>
+					<div class="card-body">
+						<p class="card-text"><%= course.description %></p>
+					</div>
+					<footer class="card-footer">
+						<% if(course.tuition){ %>
+						<span class="float-left badge badge-success">
+							Cost: <%= course.tuition %>
+						</span>
+						<% }; %>
+						<% if(currentUser !== null && currentUser.id == bootcamp.user) { %>
+						
+						<form  class="float-right"action="/api/v1/courses/<%=course.id%>?_method=DELETE" method="POST">
+							<button class="btn   btn-danger">
+								<i class="fas fa-times"></i>
+							</button>
+						</form>
+						<a href="/api/v1/courses/<%=course.id%>/edit" class="btn btn-secondary mr-2 float-right"><i class="fas fa-pencil-alt"></i></a>
+						<% }; %>
+
+					</footer>
+				</article>
+				<% }); %>
+			</section>
+			<% }else{ %>
+			<section class="card-list">
+
+				<article class="card">
+					<h5 class="card-header bg-primary text-white text-center">This bootcamp doesn't have courses.</h5>
+					<div class="card-footer text-center">
+						<% if(currentUser !== null && currentUser.id == bootcamp.user) { %>
+						<form action="/api/v1/courses/add/<%=bootcamp.id%>/course">
+							<button class="btn btn-success btn-block">Add your first course</button>
+						</form>
+						<% }else{ %>
+						<form action="/api/v1/bootcamps">
+							<button class="btn  btn-primary">Back</button>
+						</form>
+						<% }; %>
+					</div>
+				</article>
+
+			</section>
+			<% }; %>
+
+
+
+			<!-- Sidebar -->
+			<div class="col-md-6 offset-md-3 py-5 mb-5 ">
+
+				<!-- Rating -->
+				<% if(bootcamp.averageRating){ %>
+				<h1 class="text-center my-4"><span
+						class="badge badge-secondary badge-warning rounded-circle p-3"><%= bootcamp.averageRating %></span>
+					Rating
+				</h1>
+				<% }; %>
+				<% if(courses.length > 0){ %>
+				<!-- Buttons -->
+				<a href="/api/v1/bootcamps/<%=bootcamp.id%>/reviews" class="btn btn-dark btn-block my-3"><i class="fas fa-comments"></i> Read
+					Reviews</a>
+				<% if(currentUser !== null && currentUser.role !== 'publisher') { %>
+				<a href="/api/v1/reviews/add/<%=bootcamp.id%>/review" class="btn btn-light btn-block my-3"><i class="fas fa-pencil-alt"></i>
+					Write a Review</a>
+				<% }; %>
+				<% } %>
+				<a href="<%= bootcamp.website %>" target="_blank" class="btn btn-secondary btn-block my-3"><i
+						class="fas fa-globe"></i>
+					Visit Website</a>
+				<!-- Map -->
+				<!-- <div id='map' style='width: 100%; height: 300px;'></div> -->
+				<!-- <div class="card shadow-sm mt-3">
+					<div id="map"></div>
+					<ul class="list-group list-group-flush">
+					  <li class="list-group-item"><i class="fas fa-map-marker-alt"></i>
+						<%= bootcamp.location %>
+					  </li>
+					</ul>
+				</div>	 -->
+
+
+			</div>
+
+
+		</div>
+</section>
+
+<script type="text/javascript" script-src 'self' async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDr_7rZpdTwc1SL3Ac5r2673hy0yqSBNQQ&callback=initMap"></script>
+
+  
+
+
+
+
+
+
+<%- include("./partials/footer.ejs")%>

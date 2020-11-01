@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
+        integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=PT+Sans:400,700" rel="stylesheet">
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous"> -->
+    <link href="/css/bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="/css/style.css" rel="stylesheet" type="text/css">
+    <title>CampAcademy | Find a your bootcamp</title>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-md navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="/"><i class="fas fa-laptop-code"></i> CampAcademy</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    <% if(currentUser == null ) { %>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/api/v1/login"><i class="fas fa-sign-in-alt"></i> Login</a>
+                    </li>
+                    <li class="nav-item d-none d-sm-block">
+                        <a class="nav-link" href="#">|</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/api/v1/register"><i class="fas fa-user-plus"></i> Register</a>
+                    </li>
+                    <% } else { %>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-toggle="dropdown">
+                            <i class="fas fa-user"></i> <%= currentUser.name %>
+                        </a>
+                        <div class="dropdown-menu">
+                            
+
+                            <% if(currentUser.role == 'publisher' || currentUser.role == 'admin') {  %>
+
+                            <a class="dropdown-item" href="/api/v1/bootcamps/<%=currentUser.id%>">Manage Bootcamp</a>
+
+                            <% }; %>
+                            <% if(currentUser.role == 'user' || currentUser.role == 'admin') {  %>
+
+                            <a class="dropdown-item" href="/api/v1/reviews/<%=currentUser.id%>/manage">Manage
+                                Reviews</a>
+
+                            <% }; %>
+
+                            <a class="dropdown-item" href="/api/v1/users/<%=currentUser.id%>">Manage Account</a>
+
+                            <div class="dropdown-divider"></div>
+
+                            <a class="dropdown-item" href="/api/v1/auth/logout"><i class="fas fa-sign-out-alt"></i>
+                                Logout</a>
+                        </div>
+                    </li>
+
+
+                    <% } %>
+
+                </ul>
+            </div>
+
+        </div>
+    </nav>
+
+    <!-- Flash Errors -->
+    <div id="alertContainer" class="container bg-transparent">
+        <% if(message && message.length > 0) { %>
+          <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+            <%= message %>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        <% } %>
+    </div>

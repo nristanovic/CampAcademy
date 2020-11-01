@@ -1,0 +1,32 @@
+<%- include("./partials/header.ejs")%>
+
+<section class="form mt-5 card-list" style="margin-bottom: 50px;">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-5 m-auto">
+				<article class="card py-2 px-4">
+					<header class="card-header">
+						<h4 class="mb-2" style="text-align: center;">Manage Bootcamp</h4>
+					</header>
+					<div class="card-body">
+						
+						<p class="lead">
+							You have not yet added a bootcamp
+						</p>
+						<p class="text-muted mt-5">
+							* You can only add one bootcamp per account.
+						</p>
+					</div>
+					<div class="card-footer">
+						<a href="/api/v1/bootcamps/add/bootcamp" class="btn btn-primary btn-block">Add Bootcamp</a>
+					</div>
+				</article>
+			</div>
+		</div>
+	</div>
+		
+	
+</section>
+
+
+<%- include("./partials/footer.ejs")%>

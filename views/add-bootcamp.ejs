@@ -1,0 +1,116 @@
+<%- include("./partials/header.ejs")%>
+
+<section class="container mt-5 ">
+
+
+	<div class="container" style="margin-bottom: 30px;">
+		<h1 class="mb-2 text-center ">Add Bootcamp</h1>
+	</div>
+	<form method="POST" action="/api/v1/bootcamps">
+		<div class="row">
+			<div class="col-md-6">
+				<article class="card  py-2 px-4" style="height: 500px;">
+					<div class="card-body">
+						<div class="form-group">
+							<label>Name</label>
+							<input type="text" name="name" class="form-control" placeholder="Bootcamp Name"
+								 required />
+						</div>
+						<div class="form-group">
+							<label>Address</label>
+							<input type="text" name="address" class="form-control" placeholder="Full Address"
+								
+								required />
+							<small class="form-text text-muted">Street, city, etc</small>
+						</div>
+						<div class="form-group">
+							<label>Phone Number</label>
+							<input type="text" name="phone" class="form-control" placeholder="Phone"
+								/>
+						</div>
+						<div class="form-group">
+							<label>Email</label>
+							<input type="text" name="email" class="form-control" placeholder="Contact Email"
+								 />
+						</div>
+						<div class="form-group">
+							<label>Website</label>
+							<input type="text" name="website" class="form-control" placeholder="Website URL"
+								/>
+						</div>
+					</div>
+				</article>
+			</div>
+			<div class="col-md-6">
+				<article class="card py-2 px-4" style="height: 500px;">
+					<header class="card-header">
+						<h3 style="text-align: center;">Other Info</h3>
+					</header>
+					<div class="card-body">
+						<div class="form-group">
+							<label>Description</label>
+							<textarea name="description" rows="5" class="form-control"
+								placeholder="Description (What you offer, etc)"
+								maxlength="500"></textarea>
+							<small class="form-text text-muted">No more than 500 characters</small>
+						</div>
+
+
+								<!-- <div class="form-group">
+										<label>Careers</label>
+										<select name="careers" class="custom-select" multiple>
+											<option type="checkbox" selected>Select all that apply</option>
+											<option type="checkbox" value="Web Development">Web Development</option>
+											<option type="checkbox" value="Mobile Development"
+												>Mobile Development</option
+											>
+											<option type="checkbox" value="UI/UX">UI/UX</option>
+											<option type="checkbox" value="Data Science">Data Science</option>
+											<option type="checkbox" value="Business">Business</option>
+											<option type="checkbox" value="Other">Other</option>
+										</select>
+									</div> -->
+
+
+						<div class="form-group">
+							<label>Careers</label>
+							<div class="form-check">
+								<input class="form-check-input" type="checkbox" value="Data Science" name="careers"
+									id="Data Science" />
+								<label class="form-check-label" for="Data Science">
+									Data Science
+								</label>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input" type="checkbox" value="Business" name="careers"
+									id="Business" />
+								<label class="form-check-label" for="Business">
+									Business
+								</label>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input" type="checkbox" value="Mobile Development"
+									name="careers" id="MobileDevelopment" />
+								<label class="form-check-label" for="MobileDevelopment">
+									Mobile Development
+								</label>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input" type="checkbox" value="UI/UX" name="careers"
+									id="UI/UX" />
+								<label class="form-check-label" for="UI/UX">
+									UI/UX
+								</label>
+							</div>
+						</div>
+				</article>
+			</div>
+		</div>
+		<div class="form-group">
+			<input type="submit" value="Submit Bootcamp" class="btn btn-success btn-block my-4" />
+			<a href="/api/v1/bootcamps/<%=currentUser.id%>" class="btn btn-danger btn-block mb-4">Cancel</a>
+		</div>
+	</form>
+</section>
+
+<%- include("./partials/footer.ejs")%>

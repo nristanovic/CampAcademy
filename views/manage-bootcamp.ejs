@@ -1,0 +1,99 @@
+<%- include("./partials/header.ejs")%>
+
+<section class="form mt-5 card-list">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-5 m-auto">
+				<article class="card  py-4 px-4" style="height: auto; min-height: 600px; ">
+					<header class="card-header">
+						<h5 class="card-title">
+							<!-- <a href="bootcamps/<%=bootcamp.id %>/courses"> -->
+								<% if(bootcamp.averageRating){ %>
+								<span class="float-left badge badge-warning">
+									<%= bootcamp.averageRating %>
+								</span>
+								<% } %>
+
+								<% if(bootcamp.averageCost){ %>
+								<span class="float-right badge badge-success">
+									<%= bootcamp.averageCost %>
+								</span>
+								<% } %>
+								<h5 style="text-align: center;"><%= bootcamp.name %></h5>
+
+							<!-- </a> -->
+						</h5>
+					</header>
+					<div class="card-body">
+						<!-- <h6 class="mb-4">Manage Bootcamp</h6> -->
+						<span class="badge badge-dark mb-2"><%= bootcamp.city %></span>
+						<p class="card-text text-center">
+							<%= bootcamp.careers %>
+						</p>
+						<% if(bootcamp.photo !== 'no-photo.jpg'){ %>
+						<div class="offset-lg-1 col-lg-10">
+							<img src="/uploads/<%= bootcamp.photo %>" class="card-img-bottom"  alt="..." />
+						</div>
+						<% } %>
+							
+						
+						
+						
+						<!-- <p class="text-muted mt-5">
+							* You can only add one bootcamp per account.
+						</p>
+						<p class="text-muted">
+							* You must be affiliated with the bootcamp in some way in order
+							to add it to DevCamper.
+						</p> -->
+					</div>
+					
+					<div class="card-footer">
+						<form class="mb-4" method="POST" action="/api/v1/bootcamps/<%=bootcamp.id%>/photo?_method=PUT"  enctype="multipart/form-data">
+							<div class="form-group">
+								<div class="custom-file">
+									<input type="file" name="file" accept="image/*" class="custom-file-input" id="file" aria-describedby="inputGroupFileAddon01" />
+									<label class="custom-file-label" for="file">Add Bootcamp Image</label>
+								</div>
+							</div>
+							<input type="submit" class="btn btn-light btn-block" value="Upload Image">
+						</form>
+			
+							<a href="/api/v1/bootcamps/<%=bootcamp.id%>/edit" class="btn btn-primary btn-block ">Edit Bootcamp Details</a>
+							<a href="/api/v1/bootcamps/<%=bootcamp.id %>/courses" class="btn btn-secondary btn-block">Manage Courses</a>
+	
+						<form class="mt-2"action="/api/v1/bootcamps/<%=bootcamp.id%>?_method=DELETE" method="POST">
+							<button  class="btn btn-danger btn-block">Remove Bootcamp</button>
+						</form>
+						
+					</div>
+				</article>
+			</div>
+		</div>
+	</div>
+
+	<!-- <div class="row no-gutters">
+		<% if(bootcamp.photo !== 'no-photo.jpg'){ %>
+		<div class="col-md-4">
+			<img src="<%= bootcamp.photo %>" class="card-img" alt="..." />
+		</div>
+		<% } %>
+		<div class="col-md-8">
+			
+				<h5 class="card-title">
+					<a href="bootcamp.html"><%= bootcamp.name %>
+						<span
+							class="float-right badge badge-success"><%= bootcamp.averageRating %></span></a>
+				</h5>
+				<span class="badge badge-dark mb-2"><%= bootcamp.city %>,
+					<%= bootcamp.country %></span>
+				<p class="card-text">
+					<%= bootcamp.careers %>
+				</p>
+			
+		</div>
+	</div> -->
+	
+</section>
+
+<%- include("./partials/footer.ejs")%>
